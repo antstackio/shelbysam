@@ -1,0 +1,30 @@
+{
+  "name": "shelbysam",
+  "version": "1.0.0",
+  "description": "shelbysam is a wrapper for aws sam to provide additional functionalities",
+  "main": "cli.js",
+  "scripts": {
+    "init": "sh ./shell-scripts/init.sh"
+  },
+  "bin": {
+    "shelbysam": "cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antstackio/shelby-sam.git"
+  },
+  "dependencies": {
+    "commander": "^11.0.0",
+    "yargs": "^17.7.2"
+  },
+  "author": "sandykumar93",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antstackio/shelby-sam/issues"
+  },
+  "homepage": "https://github.com/antstackio/shelby-sam#readme",
+  "devDependencies": {
+    "@aws-sdk/client-cloudformation": "^3.363.0",
+    "js-yaml": "^4.1.0"
+  }
+}
