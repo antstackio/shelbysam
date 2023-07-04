@@ -6,12 +6,12 @@ import fs from "fs/promises";
 import { spawn } from "child_process";
 import { readFileToJson } from "../utils/helper.mjs";
 
-// Destructuring constants
+// deconstructing constants
 const keySeparatorsL1 = ["Globals", "Outputs", "Parameters"];
 const keySeparatorsL2 = ["Resources"];
 
-// Destructuring loop
-const destructuringLoop = async (template, args, keysL1, keysL2) => {
+// deconstructing loop
+const deconstructingLoop = async (template, args, keysL1, keysL2) => {
   //create dir
   await fs.mkdir(args.name + "/" + args.path, { recursive: true });
   // loop through the template
@@ -27,7 +27,7 @@ const destructuringLoop = async (template, args, keysL1, keysL2) => {
     }
     // create files for the selected keys - l2
     else if (keysL2.includes(k)) {
-      template[k] = await destructuringLoop(
+      template[k] = await deconstructingLoop(
         template[k],
         { name: args.name, path: args.path + "/" + k },
         Object.keys(template[k]),
@@ -49,24 +49,23 @@ const init = async (args, command) => {
     if (code !== 0) {
       console.error(`"sam init" process exited with code ${code}`);
     }
+    // rename template file
+    fs.rename(args.name + "/template.yaml", args.name + "/shelbysam.yaml");
+
+    // declare template
+    let template = await readFileToJson(args.name + "/shelbysam.yaml");
+
+    // create deconstructed files
+    template = await deconstructingLoop(
+      template,
+      args,
+      keySeparatorsL1,
+      keySeparatorsL2
+    );
+
+    // save deconstructed template
+    await fs.writeFile(args.name + "/shelbysam.yaml", yaml.dump(template));
   });
-
-  // rename template file
-  fs.rename(args.name + "/template.yaml", args.name + "/shelbysam.yaml");
-
-  // declare template
-  let template = await readFileToJson(args.name + "/shelbysam.yaml");
-
-  // create destructured files
-  template = await destructuringLoop(
-    template,
-    args,
-    keySeparatorsL1,
-    keySeparatorsL2
-  );
-
-  // save destructured template
-  await fs.writeFile(args.name + "/shelbysam.yaml", yaml.dump(template));
 };
 
 export { init };

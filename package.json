@@ -1,6 +1,6 @@
 {
   "name": "@antstackio/shelbysam",
-  "version": "1.0.0",
+  "version": "1.0.6",
   "description": "shelbysam is a wrapper for aws sam to provide additional functionalities",
   "main": "./bin/cli.mjs",
   "bin": {
@@ -11,15 +11,13 @@
     "url": "git+https://github.com/antstackio/shelby-sam.git"
   },
   "dependencies": {
-    "yargs": "^17.7.2"
+    "yargs": "^17.7.2",
+    "js-yaml": "^4.1.0"
   },
   "author": "Sandeep Kumar P <sands.kumar4u@gmail.com> (https://github.com/sandykumar93) ",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/antstackio/shelbysam/issues"
   },
-  "homepage": "https://github.com/antstackio/shelbysam#readme",
-  "devDependencies": {
-    "js-yaml": "^4.1.0"
-  }
+  "homepage": "https://github.com/antstackio/shelbysam#readme"
 }
