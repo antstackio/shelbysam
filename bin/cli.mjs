@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import yargs from "yargs/yargs";
 import { hideBin } from "yargs/helpers";
-import { init } from "./node-scripts/init.mjs";
-import { build } from "./node-scripts/build.mjs";
+import { init } from "./commands/init.mjs";
+import { build } from "./commands/build.mjs";
 
 // Get the original command from process.argv
 const command = process.argv.slice(2).join(" ");
@@ -10,13 +10,18 @@ const command = process.argv.slice(2).join(" ");
 yargs(hideBin(process.argv))
   .command(
     "init",
-    "Initialize SAM",
+    "Initialize SAM Application",
     (yargs) => {
-      // yargs.option("name", {
-      //   description: "Name of the SAM Application",
-      //   type: "string",
-      //   demandOption: true,
-      // });
+      yargs.option("name", {
+        description: "SAM Application Name",
+        type: "string",
+        required: true,
+      });
+      yargs.option("path", {
+        description: "Path of destructured resources",
+        type: "string",
+        required: true,
+      });
     },
     (argv) => {
       init(argv, command);
@@ -30,14 +35,10 @@ yargs(hideBin(process.argv))
       build(argv, command);
     }
   )
-  .option("verbose", {
-    alias: "v",
-    type: "boolean",
-    description: "coming soon*",
-  })
   .option("help", {
     alias: "h",
     type: "boolean",
     description: "coming soon*",
   })
+  .version()
   .parse();
