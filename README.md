@@ -5,21 +5,25 @@
 ## Pre-requisites
 
 - [SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
-- [rain](https://github.com/aws-cloudformation/rain)
+- [Rain](https://github.com/aws-cloudformation/rain)
 
 ## Installation
 
 `npm install -g @antstackio/shelbysam`
 
-## Initialize ShelbySAM
+## Initialize using ShelbySAM
 
-`shelbysam --name app_name --path deconstructed_resources_path`
+`shelbysam init --name app_name --path deconstructed_resources_path`
 
 ![ShelbySAM init](images/init.png)
 
 The init process deconstructs the generated template file.
 
-## Build ShelbySAM
+## Deconstruct using ShelbySAM
+
+`shelbysam deconstruct --template template.yaml --path deconstructed_resources_path`
+
+## Build using ShelbySAM
 
 `shelbysam build`
 
