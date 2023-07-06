@@ -4,6 +4,7 @@ import { hideBin } from "yargs/helpers";
 import { init } from "./commands/init.mjs";
 import { build } from "./commands/build.mjs";
 import { deconstruct } from "./commands/deconstruct.mjs";
+import { construct } from "./commands/construct.mjs";
 
 // Get the original command from process.argv
 const command = process.argv.slice(2).join(" ");
@@ -34,6 +35,14 @@ yargs(hideBin(process.argv))
     (yargs) => {},
     (argv) => {
       build(argv, command);
+    }
+  )
+  .command(
+    "construct",
+    "Construct SAM Application's template.yaml",
+    (yargs) => {},
+    (argv) => {
+      construct(argv, command);
     }
   )
   .command(

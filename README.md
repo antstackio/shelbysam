@@ -19,6 +19,10 @@
 
 The init process deconstructs the generated template file.
 
+## Construct using ShelbySAM
+
+`shelbysam construct`
+
 ## Deconstruct using ShelbySAM
 
 `shelbysam deconstruct --template template.yaml --path deconstructed_resources_path`

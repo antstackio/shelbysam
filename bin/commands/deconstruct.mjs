@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-// Import required packages
 import yaml from "js-yaml";
 import fs from "fs/promises";
 import { readFileToJson } from "../utils/helper.mjs";
@@ -11,11 +10,18 @@ const keySeparatorsL2 = ["Resources"];
 
 // Main function
 const deconstruct = async (args, command) => {
+  // Switching between args.template and args.name is to enable reusability
+
   // rename template file
-  fs.rename(args.template, "shelbysam.yaml");
+  fs.rename(
+    args.template ? args.template : args.name + "/template.yaml",
+    args.name ? args.name + "/shelbysam.yaml" : "shelbysam.yaml"
+  );
 
   // declare template
-  let template = await readFileToJson("shelbysam.yaml");
+  let template = await readFileToJson(
+    args.name ? args.name + "/shelbysam.yaml" : "shelbysam.yaml"
+  );
 
   // create deconstructed files
   template = await deconstructingLoop(
