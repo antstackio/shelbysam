@@ -1,6 +1,6 @@
 {
   "name": "@antstackio/shelbysam",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "shelbysam is a wrapper for aws sam to provide additional functionalities",
   "main": "./bin/cli.mjs",
   "bin": {

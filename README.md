@@ -15,17 +15,15 @@
 
 `shelbysam init --name app_name --path deconstructed_resources_path`
 
+The init command takes the passed arguments, creates a sam app using `sam init` process and deconstructs the generate template
+
 ![ShelbySAM init](images/init.png)
-
-The init process deconstructs the generated template file.
-
-## Construct using ShelbySAM
-
-`shelbysam construct`
 
 ## Deconstruct using ShelbySAM
 
 `shelbysam deconstruct --template template.yaml --path deconstructed_resources_path`
+
+The deconstruct command takes an existing template file as input and deconstructs it onto the specified folder. It will also create the `shelbysam.yaml` file which will be used for further processing.
 
 ## Build using ShelbySAM
 
@@ -33,7 +31,13 @@ The init process deconstructs the generated template file.
 
 ![ShelbySAM build](images/build.png)
 
-The build process constructs the template file.
+The build command constructs the `template.yaml` from the references available in `shelbysam.yaml`. Then it proceeds to run `sam build` based on the constructed `template.yaml` file.
+
+## Construct using ShelbySAM
+
+`shelbysam construct`
+
+The build command constructs the `template.yaml` from the references available in `shelbysam.yaml`.
 
 ## Path References
 
