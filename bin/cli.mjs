@@ -5,6 +5,7 @@ import { init } from "./commands/init.mjs";
 import { build } from "./commands/build.mjs";
 import { deconstruct } from "./commands/deconstruct.mjs";
 import { construct } from "./commands/construct.mjs";
+import { add } from "./commands/add.mjs";
 
 // Get the original command from process.argv
 const command = process.argv.slice(2).join(" ");
@@ -62,6 +63,25 @@ yargs(hideBin(process.argv))
     },
     (argv) => {
       deconstruct(argv, command);
+    }
+  )
+  .command(
+    "add",
+    "Add a new resource to the ShelbySAM template",
+    (yargs) => {
+      yargs.option("resource", {
+        description: "Cloudformation resource type",
+        type: "string",
+        required: true,
+      });
+      yargs.option("name", {
+        description: "Cloudformation logical id",
+        type: "string",
+        required: true,
+      });
+    },
+    (argv) => {
+      add(argv, command);
     }
   )
   .option("help", {

@@ -11,8 +11,8 @@
     "url": "git+https://github.com/antstackio/shelby-sam.git"
   },
   "dependencies": {
-    "yargs": "^17.7.2",
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "yargs": "^17.7.2"
   },
   "author": "Sandeep Kumar P <sands.kumar4u@gmail.com> (https://github.com/sandykumar93) ",
   "license": "MIT",
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/antstackio/shelbysam#readme",
   "keywords": [
     "serverless",
-    "sam"
+    "sam-cli",
+    "aws"
   ]
 }

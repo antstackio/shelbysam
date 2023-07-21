@@ -1,0 +1,97 @@
+lambda1:
+  Type: AWS::EC2::Instance
+  Properties:
+    AdditionalInfo: String
+    Affinity: String
+    AvailabilityZone: String
+    BlockDeviceMappings:
+      - DeviceName: String
+        Ebs:
+          DeleteOnTermination: Boolean
+          Encrypted: Boolean
+          Iops: Integer
+          KmsKeyId: String
+          SnapshotId: String
+          VolumeSize: Integer
+          VolumeType: String
+        NoDevice: {}
+        VirtualName: String
+    CpuOptions:
+      CoreCount: Integer
+      ThreadsPerCore: Integer
+    CreditSpecification:
+      CPUCredits: String
+    DisableApiTermination: Boolean
+    EbsOptimized: Boolean
+    ElasticGpuSpecifications:
+      - Type: String
+    ElasticInferenceAccelerators:
+      - Count: Integer
+        Type: String
+    EnclaveOptions:
+      Enabled: Boolean
+    HibernationOptions:
+      Configured: Boolean
+    HostId: String
+    HostResourceGroupArn: String
+    IamInstanceProfile: String
+    ImageId: String
+    InstanceInitiatedShutdownBehavior: String
+    InstanceType: String
+    Ipv6AddressCount: Integer
+    Ipv6Addresses:
+      - Ipv6Address: String
+    KernelId: String
+    KeyName: String
+    LaunchTemplate:
+      LaunchTemplateId: String
+      LaunchTemplateName: String
+      Version: String
+    LicenseSpecifications:
+      - LicenseConfigurationArn: String
+    Monitoring: Boolean
+    NetworkInterfaces:
+      - AssociateCarrierIpAddress: Boolean
+        AssociatePublicIpAddress: Boolean
+        DeleteOnTermination: Boolean
+        Description: String
+        DeviceIndex: String
+        GroupSet:
+          - String
+        Ipv6AddressCount: Integer
+        Ipv6Addresses:
+          - Ipv6Address: String
+        NetworkInterfaceId: String
+        PrivateIpAddress: String
+        PrivateIpAddresses:
+          - Primary: Boolean
+            PrivateIpAddress: String
+        SecondaryPrivateIpAddressCount: Integer
+        SubnetId: String
+    PlacementGroupName: String
+    PrivateDnsNameOptions:
+      EnableResourceNameDnsAAAARecord: Boolean
+      EnableResourceNameDnsARecord: Boolean
+      HostnameType: String
+    PrivateIpAddress: String
+    PropagateTagsToVolumeOnCreation: Boolean
+    RamdiskId: String
+    SecurityGroupIds:
+      - String
+    SecurityGroups:
+      - String
+    SourceDestCheck: Boolean
+    SsmAssociations:
+      - AssociationParameters:
+          - Key: String
+            Value:
+              - String
+        DocumentName: String
+    SubnetId: String
+    Tags:
+      - key: value
+    Tenancy: String
+    UserData: String
+    Volumes:
+      - Device: String
+        VolumeId: String
