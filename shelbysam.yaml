@@ -1,9 +1,0 @@
-AWSTemplateFormatVersion: '2010-09-09'
-Description: |
-  app
-  Sample SAM Template for app
-Transform: AWS::Serverless-2016-10-31
-Globals: ${file:infra/Globals.yml}
-Resources:
-  HelloWorldFunction: ${file:infra/Resources/HelloWorldFunction.yml}
-Outputs: ${file:infra/Outputs.yml}

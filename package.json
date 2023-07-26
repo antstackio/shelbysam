@@ -24,5 +24,11 @@
     "serverless",
     "sam-cli",
     "aws"
-  ]
+  ],
+  "devDependencies": {
+    "inquirer": "^9.2.8",
+    "inquirer-autocomplete-prompt": "^3.0.0",
+    "json2toml": "^5.0.0",
+    "toml": "^3.0.0"
+  }
 }
