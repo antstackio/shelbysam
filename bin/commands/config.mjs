@@ -2,6 +2,7 @@
 import toml from "toml";
 import fs from "fs";
 import json2toml from "json2toml";
+import { readConfig } from "../utils/helper.mjs";
 
 const cfr = {
   "us-east-1":
@@ -89,9 +90,7 @@ const config = async (args) => {
 
   // Check config file
   try {
-    const shelbysamConfig = toml.parse(
-      fs.readFileSync("shelbysam-config.toml", "utf8")
-    );
+    const shelbysamConfig = await readConfig();
   } catch (error) {
     if (
       error.message ===
@@ -106,8 +105,9 @@ const config = async (args) => {
   // if configuration does not exist, create it
   if (!configExists) {
     fs.mkdirSync(".shelbysam");
-    fs.writeFileSync("shelbysam-config.toml", json2toml(args));
   }
+
+  fs.writeFileSync("shelbysam-config.toml", json2toml(args));
   // Fetch the file to create or update it on config command
   fetchCF(args.region);
   return;

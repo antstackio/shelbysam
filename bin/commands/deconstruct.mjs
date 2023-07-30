@@ -32,7 +32,7 @@ const deconstruct = async (args, command) => {
   );
 
   // save deconstructed template
-  await fs.writeFile("shelbysam.yaml", yaml.dump(template));
+  await fs.writeFile(args.name + "/shelbysam.yaml", yaml.dump(template));
 };
 
 export { deconstruct };
