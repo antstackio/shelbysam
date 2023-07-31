@@ -11,27 +11,11 @@
 
 `npm install -g @antstackio/shelbysam`
 
-## Initialize using ShelbySAM
-
-`shelbysam init --name app_name --path deconstructed_resources_path`
-
-The init command takes the passed arguments, creates a sam app using `sam init` process and deconstructs the generate template
-
-![ShelbySAM init](images/init.png)
-
 ## Deconstruct using ShelbySAM
 
 `shelbysam deconstruct --template template.yaml --path deconstructed_resources_path`
 
 The deconstruct command takes an existing template file as input and deconstructs it onto the specified folder. It will also create the `shelbysam.yaml` file which will be used for further processing.
-
-## Build using ShelbySAM
-
-`shelbysam build`
-
-![ShelbySAM build](images/build.png)
-
-The build command constructs the `template.yaml` from the references available in `shelbysam.yaml`. Then it proceeds to run `sam build` based on the constructed `template.yaml` file.
 
 ## Construct using ShelbySAM
 
@@ -43,3 +27,11 @@ The build command constructs the `template.yaml` from the references available i
 
 - `Resource1: "${file:./infra/resource1.yml}"` - Direct file reference.
 - `Resource1: "${file:./infra/resource.yml:resource1}"` - File reference with nested resources.
+
+## Rules
+
+- `LogicalId` be the same as the deconstructed file name without `.yaml`.
+
+## Clone
+
+- Available only for direct file references

@@ -2,7 +2,6 @@
 import { readJson, readFileToJson, readConfig } from "../utils/helper.mjs";
 import fs from "fs";
 import yaml from "js-yaml";
-const documents = [];
 let templateRegistry = {};
 
 const identifyType = (key, properties, resource) => {
@@ -50,39 +49,51 @@ const identifyType = (key, properties, resource) => {
 
 // Main Function
 const add = async (args, command) => {
+  // read config file
   const shelbysamConfig = await readConfig();
 
+  // get cloudformation registry
   templateRegistry = await readJson(
     `.shelbysam/${shelbysamConfig.region}.json`
   );
 
+  // read template file
   const shelbysamTemplate = await readFileToJson(
     shelbysamConfig.shelbysam_template_file
   );
+
   // main template definition--> "ResourceTypes"
   let outputTemplate = {};
-  const resourceTemplate = templateRegistry.ResourceTypes[args.resource];
+  const resourceTemplate = templateRegistry.ResourceTypes[args.type];
+  // log document link
+  console.log(
+    `\n For more information on ${args.type}, visit ${resourceTemplate.Documentation}\n`
+  );
+
+  //start processing
   for (const [k, v] of Object.entries(resourceTemplate)) {
     if (k === "Properties") {
       for (const [kk, vv] of Object.entries(v)) {
-        outputTemplate[kk] = identifyType(kk, vv, args.resource);
+        outputTemplate[kk] = identifyType(kk, vv, args.type);
       }
     }
   }
 
+  // set resource path
   const shelbysamResourcePath =
     shelbysamConfig.shelbysam_template_folder +
     "/Resources/" +
-    args.name +
+    args.lid +
     ".yaml";
 
-  shelbysamTemplate.Resources[args.name] =
+  // add resource to template
+  shelbysamTemplate.Resources[args.lid] =
     "${file:" + shelbysamResourcePath + "}";
 
-  // write the output resource
+  // write the resource file
   fs.writeFileSync(
     shelbysamResourcePath,
-    yaml.dump({ Type: args.resource, Properties: outputTemplate })
+    yaml.dump({ Type: args.type, Properties: outputTemplate })
   );
 
   // write the final template
@@ -91,7 +102,7 @@ const add = async (args, command) => {
     yaml.dump(shelbysamTemplate)
   );
 
-  return { [args.name]: { Type: args.resource, Properties: outputTemplate } };
+  return {};
 };
 
 export { add };

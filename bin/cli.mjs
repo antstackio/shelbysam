@@ -4,12 +4,12 @@ import inquirer from "inquirer";
 import autocompletePrompt from "inquirer-autocomplete-prompt";
 
 import { hideBin } from "yargs/helpers";
-import { init } from "./commands/init.mjs";
-import { build } from "./commands/build.mjs";
 import { deconstruct } from "./commands/deconstruct.mjs";
 import { construct } from "./commands/construct.mjs";
 import { add } from "./commands/add.mjs";
 import { config } from "./commands/config.mjs";
+import { remove } from "./commands/remove.mjs";
+import { clone } from "./commands/clone.mjs";
 
 // Get the original command from process.argv
 const command = process.argv.slice(2).join(" ");
@@ -51,12 +51,6 @@ const awsRegions = [
 inquirer.registerPrompt("autocomplete", autocompletePrompt);
 
 yargs(hideBin(process.argv))
-  .command("init", "Initialize SAM Application", (argv) => {
-    init(argv, command);
-  })
-  .command("build", "Building SAM Application", (argv) => {
-    build(argv, command);
-  })
   .command("construct", "Construct SAM Application's template.yaml", (argv) => {
     construct(argv, command);
   })
@@ -81,12 +75,12 @@ yargs(hideBin(process.argv))
     "add",
     "Add a new resource to the ShelbySAM template",
     (yargs) => {
-      yargs.option("resource", {
+      yargs.option("type", {
         description: "Cloudformation resource type",
         type: "string",
         required: true,
       });
-      yargs.option("name", {
+      yargs.option("lid", {
         description: "Cloudformation logical id",
         type: "string",
         required: true,
@@ -94,6 +88,39 @@ yargs(hideBin(process.argv))
     },
     (argv) => {
       add(argv, command);
+    }
+  )
+  .command(
+    "remove",
+    "Remove an existing resource from the ShelbySAM template",
+    (yargs) => {
+      yargs.option("lid", {
+        description: "Cloudformation logical id",
+        type: "string",
+        required: true,
+      });
+    },
+    (argv) => {
+      remove(argv, command);
+    }
+  )
+  .command(
+    "clone",
+    "Clone an existing resource from the ShelbySAM template",
+    (yargs) => {
+      yargs.option("slid", {
+        description: "Source Cloudformation logical id",
+        type: "string",
+        required: true,
+      });
+      yargs.option("dlid", {
+        description: "Destination Cloudformation logical id",
+        type: "string",
+        required: true,
+      });
+    },
+    (argv) => {
+      clone(argv, command);
     }
   )
   .command("config", "Configure ShelbySAM", {}, () => {
@@ -108,13 +135,6 @@ yargs(hideBin(process.argv))
               awsRegions.filter((region) => region.includes(input || ""))
             );
           },
-        },
-        {
-          type: "input",
-          name: "sam_app_name",
-          default: "sam-app",
-          message:
-            "Enter the SAM application name (Optional, required if using shelbysam init): ",
         },
 
         {
@@ -140,6 +160,7 @@ yargs(hideBin(process.argv))
         config(answers);
       });
   })
+
   .option("help", {
     alias: "h",
     type: "boolean",

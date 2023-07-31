@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-import toml from "toml";
 import fs from "fs";
 import json2toml from "json2toml";
 import { readConfig } from "../utils/helper.mjs";
