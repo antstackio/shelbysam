@@ -23,12 +23,13 @@ const deconstruct = async (args, command) => {
     ? args.template
     : shelbysamConfig.sam_template_file;
   args.path = args.path ? args.path : shelbysamConfig.shelbysam_template_folder;
+  args.name = args.name ? args.name + "/" : "";
 
   // rename template file
-  fs.cpSync(args.template, "shelbysam.yaml");
+  fs.cpSync(args.name + args.template, args.name + "shelbysam.yaml");
 
   // declare template
-  let template = await readFileToJson("shelbysam.yaml");
+  let template = await readFileToJson(args.name + "shelbysam.yaml");
 
   // create deconstructed files
   template = await deconstructingLoop(
@@ -39,7 +40,7 @@ const deconstruct = async (args, command) => {
   );
 
   // save deconstructed template
-  await fs.writeFileSync("shelbysam.yaml", yaml.dump(template));
+  await fs.writeFileSync(args.name + "shelbysam.yaml", yaml.dump(template));
 };
 
 export { deconstruct };

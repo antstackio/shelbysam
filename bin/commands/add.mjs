@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readJson } from "../utils/helper.mjs";
+import { readJson, readFileToJson, readConfig } from "../utils/helper.mjs";
 import fs from "fs";
 import yaml from "js-yaml";
 const documents = [];
@@ -50,9 +50,15 @@ const identifyType = (key, properties, resource) => {
 
 // Main Function
 const add = async (args, command) => {
-  // future - read the file dynamically based on region
-  templateRegistry = await readJson("cloudformation_registry/ap_south_1.json");
+  const shelbysamConfig = await readConfig();
 
+  templateRegistry = await readJson(
+    `.shelbysam/${shelbysamConfig.region}.json`
+  );
+
+  const shelbysamTemplate = await readFileToJson(
+    shelbysamConfig.shelbysam_template_file
+  );
   // main template definition--> "ResourceTypes"
   let outputTemplate = {};
   const resourceTemplate = templateRegistry.ResourceTypes[args.resource];
@@ -64,15 +70,27 @@ const add = async (args, command) => {
     }
   }
 
-  // convert to yaml
+  const shelbysamResourcePath =
+    shelbysamConfig.shelbysam_template_folder +
+    "/Resources/" +
+    args.name +
+    ".yaml";
 
-  // write the output
+  shelbysamTemplate.Resources[args.name] =
+    "${file:" + shelbysamResourcePath + "}";
+
+  // write the output resource
   fs.writeFileSync(
-    "testing.yaml",
-    yaml.dump({
-      [args.name]: { Type: args.resource, Properties: outputTemplate },
-    })
+    shelbysamResourcePath,
+    yaml.dump({ Type: args.resource, Properties: outputTemplate })
   );
+
+  // write the final template
+  fs.writeFileSync(
+    `${shelbysamConfig.shelbysam_template_file}`,
+    yaml.dump(shelbysamTemplate)
+  );
+
   return { [args.name]: { Type: args.resource, Properties: outputTemplate } };
 };
 

@@ -54,22 +54,12 @@ yargs(hideBin(process.argv))
   .command("init", "Initialize SAM Application", (argv) => {
     init(argv, command);
   })
-  .command(
-    "build",
-    "Building SAM Application",
-    (yargs) => {},
-    (argv) => {
-      build(argv, command);
-    }
-  )
-  .command(
-    "construct",
-    "Construct SAM Application's template.yaml",
-    (yargs) => {},
-    (argv) => {
-      construct(argv, command);
-    }
-  )
+  .command("build", "Building SAM Application", (argv) => {
+    build(argv, command);
+  })
+  .command("construct", "Construct SAM Application's template.yaml", (argv) => {
+    construct(argv, command);
+  })
   .command(
     "deconstruct",
     "Deconstruct existing template file",
@@ -123,7 +113,8 @@ yargs(hideBin(process.argv))
           type: "input",
           name: "sam_app_name",
           default: "sam-app",
-          message: "Enter the SAM application name: ",
+          message:
+            "Enter the SAM application name (Optional, required if using shelbysam init): ",
         },
 
         {
