@@ -1,5 +1,0 @@
-Type: AWS::Logs::LogGroup
-Properties:
-  RetentionInDays: 7
-  LogGroupName:
-    Fn::Sub: LeaveApplicationLogGroup

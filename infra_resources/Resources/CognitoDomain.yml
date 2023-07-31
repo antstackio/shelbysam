@@ -1,6 +1,0 @@
-Type: AWS::Cognito::UserPoolDomain
-Properties:
-  Domain:
-    Ref: CognitoUserPoolDomain
-  UserPoolId:
-    Ref: CognitoUserPool
