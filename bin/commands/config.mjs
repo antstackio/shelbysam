@@ -91,6 +91,8 @@ const config = async (args) => {
   // Check config file
   try {
     const shelbysamConfig = await readConfig();
+    // future
+    // replace this with existsSync
   } catch (error) {
     if (
       error.message ===

@@ -1,0 +1,6 @@
+CognitoUserPoolDomain:
+  Description: Auth domain used in cognito to create the sign in / sign up links
+  Type: String
+S3BucketName:
+  Description: Auth domain used in cognito to create the sign in / sign up links
+  Type: String

@@ -1,0 +1,23 @@
+Type: AWS::Cognito::UserPool
+Properties:
+  UserPoolName: ACD-User-Pool
+  AutoVerifiedAttributes:
+    - email
+  AliasAttributes:
+    - email
+  Policies:
+    PasswordPolicy:
+      MinimumLength: 8
+      RequireUppercase: true
+      RequireLowercase: true
+      RequireNumbers: true
+      RequireSymbols: true
+  Schema:
+    - AttributeDataType: String
+      Name: email
+      Required: true
+  LambdaConfig:
+    PostConfirmation:
+      Fn::GetAtt:
+        - CognitoTriggerPostSignup
+        - Arn

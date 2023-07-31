@@ -1,0 +1,34 @@
+Type: AWS::Serverless::Function
+Properties:
+  FunctionName: manual-approval
+  CodeUri: lambdas/manual-approval
+  Handler: app.lambdaHandler
+  Runtime: nodejs14.x
+  Environment:
+    Variables:
+      leavesTable:
+        Ref: LeaveTable
+      userinfoTable:
+        Ref: UserInfoTable
+  Policies:
+    - AWSLambdaDynamoDBExecutionRole
+    - DynamoDBCrudPolicy:
+        TableName:
+          Ref: LeaveTable
+    - DynamoDBCrudPolicy:
+        TableName:
+          Ref: UserInfoTable
+    - Statement:
+        - Sid: StepFunctionTaskToken
+          Effect: Allow
+          Action:
+            - states:SendTaskSuccess
+          Resource: '*'
+  Events:
+    Root:
+      Type: Api
+      Properties:
+        RestApiId:
+          Ref: LeaveApprovalApi2
+        Path: /manualApproval
+        Method: POST

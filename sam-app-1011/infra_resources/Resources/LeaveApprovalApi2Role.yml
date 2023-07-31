@@ -1,0 +1,31 @@
+Type: AWS::IAM::Role
+Properties:
+  ManagedPolicyArns:
+    - arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs
+  AssumeRolePolicyDocument:
+    Version: '2012-10-17'
+    Statement:
+      - Effect: Allow
+        Principal:
+          Service:
+            - apigateway.amazonaws.com
+        Action:
+          - sts:AssumeRole
+  Path: /
+  Policies:
+    - PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action: states:StartExecution
+            Resource:
+              - Ref: LeaveApplicationStepFunction
+      PolicyName: StepFunctionSyncExecution
+    - PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action: lambda:InvokeFunction
+            Resource:
+              Fn::Sub: arn:aws:lambda:*:${AWS::AccountId}:function:*
+      PolicyName: LambdaFunctionInvocation

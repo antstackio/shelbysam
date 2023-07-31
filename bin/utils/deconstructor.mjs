@@ -5,6 +5,8 @@ import fs from "fs/promises";
 const deconstructingLoop = async (template, args, keysL1, keysL2) => {
   // const handler to reuse the function for init and deconstruct
   const name = args.name ? args.name + "/" : "";
+
+  console.log("asdn", name, args.path);
   //create dir
   await fs.mkdir(name + args.path, { recursive: true });
   // loop through the template

@@ -1,0 +1,7 @@
+Type: AWS::S3::Bucket
+Properties:
+  BucketName:
+    Ref: S3BucketName
+  WebsiteConfiguration:
+    ErrorDocument: error.html
+    IndexDocument: index.html

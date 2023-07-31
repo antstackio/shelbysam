@@ -77,12 +77,10 @@ yargs(hideBin(process.argv))
       yargs.option("template", {
         description: "Name of the template file to be deconstructed",
         type: "string",
-        required: true,
       });
       yargs.option("path", {
         description: "Path of destructured resources",
         type: "string",
-        required: true,
       });
     },
     (argv) => {
