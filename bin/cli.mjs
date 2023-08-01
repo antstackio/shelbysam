@@ -51,9 +51,23 @@ const awsRegions = [
 inquirer.registerPrompt("autocomplete", autocompletePrompt);
 
 yargs(hideBin(process.argv))
-  .command("construct", "Construct SAM Application's template.yaml", (argv) => {
-    construct(argv, command);
-  })
+  .command(
+    "construct",
+    "Construct SAM Application's template.yaml",
+    (yargs) => {
+      yargs.option("itemplate", {
+        description: "Name of the template file to be constructed",
+        type: "string",
+      });
+      yargs.option("otemplate", {
+        description: "Name of the constructed template file",
+        type: "string",
+      });
+    },
+    (argv) => {
+      construct(argv, command);
+    }
+  )
   .command(
     "deconstruct",
     "Deconstruct existing template file",
