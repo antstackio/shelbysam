@@ -1,25 +1,16 @@
-import { promisify } from "util";
-import { exec } from "child_process";
+import { schema } from "yaml-cfn";
+import yaml from "js-yaml";
 import fs from "fs";
-const executeCommand = promisify(exec);
 import toml from "toml";
 
 // helper file to read yaml file and parse it as json
 const readFileToJson = async (filePath) => {
-  let { stdout, stderr } = await executeCommand(`rain fmt ${filePath} -j`);
-  if (stderr) console.log(stderr);
-  else return JSON.parse(stdout);
-};
-
-// helper file to read yaml file and parse it as json
-const readFileToYaml = async (filePath) => {
-  let { stdout, stderr } = await executeCommand(`rain fmt ${filePath}`);
-  if (stderr) console.log(stderr);
-  else return JSON.parse(stdout);
+  let yamlString = fs.readFileSync(filePath, "utf8");
+  return yaml.load(yamlString, { schema: schema });
 };
 
 const readJson = async (filePath) => {
-  let json = await fs.promises.readFile(filePath, "utf8");
+  let json = fs.readFileSync(filePath, "utf8");
   return JSON.parse(json);
 };
 
@@ -30,4 +21,4 @@ const readConfig = async () => {
   return shelbysamConfig;
 };
 
-export { readFileToJson, readFileToYaml, readJson, readConfig };
+export { readFileToJson, readJson, readConfig };

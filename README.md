@@ -1,11 +1,8 @@
 # ShelbySAM
 
-`ShelbySAM` is a plugin for the AWS SAM CLI, offering additional functionality. It facilitates the deconstruction of a template file into multiple resource files, simplifying maintenance and enabling seamless progress with the template file.
+`Shelbysam` is a transformative npm package that streamlines SAM templates. Simplify your cloudformation journey with Shelbysam's intuitive "construction" and "deconstruction" features, making cloud management a breeze.It effortlessly splits a complex YAML file into individual resource-specific files, fostering easy maintenance and scalability.
 
-## Pre-requisites
-
-- [SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
-- [Rain](https://github.com/aws-cloudformation/rain)
+You can also seamlessly add new resources, Shelbysam dynamically fetches essential parameters from the CloudFormation registry. Plus you can clone or remove existing resources.
 
 ## Installation
 
