@@ -1,8 +1,0 @@
-Type: AWS::CloudFront::OriginAccessControl
-Properties:
-  OriginAccessControlConfig:
-    Name:
-      Fn::Sub: ${WebSiteBucket} OAC
-    OriginAccessControlOriginType: s3
-    SigningBehavior: always
-    SigningProtocol: sigv4
