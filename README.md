@@ -27,9 +27,9 @@ The deconstruct command takes an existing template (`sam_template_file`) file as
 
 Flags
 
---template : The template file to be deconstructed. Defaults to `sam_template_file` or `template.yaml`
+--template, -t : The template file to be deconstructed. Defaults to `sam_template_file` or `template.yaml`
 
---path : The folder to store deconstructed resources. Defaults to `shelbysam_template_folder` or `infra_resources`
+--path, -p : The folder to store deconstructed resources. Defaults to `shelbysam_template_folder` or `infra_resources`
 
 Both the flags are optional. If the flags are not specified ShelbySAM will pick up the information from the `shelbysam-config.toml`.
 
@@ -41,9 +41,9 @@ The construct command creates the final SAM template file from the ShelbySAM tem
 
 Flags
 
---itemplate : Input template file. Defaults to `shelbysam_template_file` or `shelbysam.yaml`
+--itemplate, -i : Input template file. Defaults to `shelbysam_template_file` or `shelbysam.yaml`
 
---otemplate : Output template file. Defaults to `sam_template_file` or `template.yaml`
+--otemplate, -o : Output template file. Defaults to `sam_template_file` or `template.yaml`
 
 Both the flags are optional. If the flags are not specified ShelbySAM will pick up the information from the `shelbysam-config.toml`.
 
@@ -53,9 +53,9 @@ The add command creates resource file with the respective template and adds it t
 
 Flags
 
---type : The cloudformation type. eg : `AWS::Lambda::Function"
+--type, -t : The cloudformation type. eg : `AWS::Lambda::Function"
 
---lid : The logical id for the new resource
+--lid, -i : The logical id for the new resource
 
 ## Clone Resource using ShelbySAM
 
@@ -63,11 +63,11 @@ The clone command clones a resource in the existing template.
 
 Flags
 
---slid : The source logical id of the resource from `shelbysam_template_file`
+--slid, -s : The source logical id of the resource from `shelbysam_template_file`
 
---dlid : The destination logical if of the resource to be created in `shelbysam_template_file`
+--dlid, -d : The destination logical if of the resource to be created in `shelbysam_template_file`
 
-- Note : Available only for direct file references
+--group, -g : If specified, ShelbySAM will clone all the resources in the group
 
 ## Remove using ShelbySAM
 
@@ -75,15 +75,9 @@ The remove command creates resource file with the respective template and also r
 
 Flags
 
---lid : The logical id for the resource to be removed
-
-- Note : Available only for direct file references
+--lid, -i : The logical id for the resource to be removed
 
 ## Path References
 
 - `Resource1: "${file:./infra/resource1.yml}"` - Direct file reference.
-- `Resource1: "${file:./infra/resource.yml:resource1}"` - File reference with nested resources.
-
-## Rules
-
-- `LogicalId` of the resource should be the same as the deconstructed file name without `.yaml`. eg: If the logical id of a resource is `Resource1`, the deconstructed file should be named `Resource1.yaml`. This is required to use the `shelbysam add / remove / clone` commands. If you are using only `shelbysam construct / deconstruct` you can defer this rule.
+- `Resource1: "${file:./infra/resource.yml:resource1}"` - File reference with nested resources / Group Resources.
