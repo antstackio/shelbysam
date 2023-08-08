@@ -1,8 +1,5 @@
-import { readFileToJson } from "./helper.mjs";
-
-// regex
-const fileRegex = /\$\{file:(.*?)\}/g; // direct file reference
-const fileObjectRegex = /\$\{file:([^:}]+):([^}]+)\}/g; // nested file reference
+import { readYaml } from "./helper.mjs";
+import { fileRegex, fileObjectRegex } from "../utils/constants.mjs";
 
 // recursive loop to parse shelbysam syntax
 const constructingLoop = async (data) => {
@@ -12,12 +9,12 @@ const constructingLoop = async (data) => {
     } else if (typeof v === "string") {
       let matchedRegex1 = [...v.matchAll(fileObjectRegex)];
       if (matchedRegex1 !== null && matchedRegex1.length > 0) {
-        let temp = await readFileToJson(matchedRegex1[0][1]);
+        let temp = await readYaml(matchedRegex1[0][1]);
         data[k] = temp[matchedRegex1[0][2]];
       } else {
         let matchedRegex2 = [...v.matchAll(fileRegex)];
         if (matchedRegex2 !== null && matchedRegex2.length > 0) {
-          data[k] = await readFileToJson(matchedRegex2[0][1]);
+          data[k] = await readYaml(matchedRegex2[0][1]);
         }
       }
     }

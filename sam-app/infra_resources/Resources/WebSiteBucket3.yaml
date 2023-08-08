@@ -1,0 +1,31 @@
+bucket:
+  Type: AWS::S3::Bucket
+bucketPolicy:
+  Type: AWS::S3::BucketPolicy
+  Properties:
+    Bucket:
+      Ref: WebSiteBucket
+    PolicyDocument:
+      Version: '2012-10-17'
+      Id: PolicyForCloudFrontPrivateContent
+      Statement:
+        - Sid: AllowCloudFrontServicePrincipal
+          Effect: Allow
+          Principal:
+            Service: cloudfront.amazonaws.com
+          Action: s3:GetObject
+          Resource:
+            Fn::Join:
+              - ''
+              - - 'arn:aws:s3:::'
+                - Ref: WebSiteBucket
+                - /*
+          Condition:
+            StringEquals:
+              AWS:SourceArn:
+                Fn::Join:
+                  - ''
+                  - - 'arn:aws:cloudfront::'
+                    - Ref: AWS::AccountId
+                    - ':distribution/'
+                    - Ref: CloudFrontDistribution

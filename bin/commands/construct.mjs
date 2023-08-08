@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import fs from "fs";
 import yaml from "js-yaml";
-import { readFileToJson, readConfig } from "../utils/helper.mjs";
+import { readYaml, readConfig } from "../utils/helper.mjs";
 import { constructingLoop } from "../utils/constructor.mjs";
 
 // Main Function
@@ -21,7 +21,7 @@ const construct = async (args, command) => {
     : shelbysamConfig.sam_template_file;
 
   // read base file
-  let baseTemplate = await readFileToJson(args.itemplate);
+  let baseTemplate = await readYaml(args.itemplate);
 
   // construct template file
   baseTemplate = await constructingLoop(baseTemplate);

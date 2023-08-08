@@ -2,7 +2,7 @@
 
 import yaml from "js-yaml";
 import fs from "fs";
-import { readFileToJson, readConfig } from "../utils/helper.mjs";
+import { readYaml, readConfig } from "../utils/helper.mjs";
 import { deconstructingLoop } from "../utils/deconstructor.mjs";
 
 const keySeparatorsL1 = ["Globals", "Outputs", "Parameters"];
@@ -28,7 +28,7 @@ const deconstruct = async (args, command) => {
   fs.cpSync(args.template, "shelbysam.yaml");
 
   // declare template
-  let template = await readFileToJson("shelbysam.yaml");
+  let template = await readYaml("shelbysam.yaml");
 
   // create deconstructed files
   template = await deconstructingLoop(

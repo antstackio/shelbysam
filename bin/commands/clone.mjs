@@ -1,47 +1,69 @@
 #!/usr/bin/env node
-import { readJson, readFileToJson, readConfig } from "../utils/helper.mjs";
+import {
+  readYaml,
+  readConfig,
+  matchRegex,
+  writeYaml,
+} from "../utils/helper.mjs";
 import fs from "fs";
-import yaml from "js-yaml";
-let templateRegistry = {};
 
 // Main Function
 const clone = async (args, command) => {
   // read config file
   const shelbysamConfig = await readConfig();
 
-  // read template file
-  const shelbysamTemplate = await readFileToJson(
+  // read template
+  const shelbysamTemplate = await readYaml(
     shelbysamConfig.shelbysam_template_file
   );
 
-  // set source resource path
-  const shelbysamSourceResourcePath =
-    shelbysamConfig.shelbysam_template_folder +
-    "/Resources/" +
-    args.slid +
-    ".yaml";
+  // match regex for the available declarations
+  const resource = matchRegex(shelbysamTemplate.Resources[args.slid]);
 
-  // set destination resource path
+  const shelbysamSourceResourcePath = resource[1][1];
   const shelbysamDestinationResourcePath =
     shelbysamConfig.shelbysam_template_folder +
     "/Resources/" +
     args.dlid +
     ".yaml";
 
-  // add resource to template
-  shelbysamTemplate.Resources[args.dlid] =
-    "${file:" + shelbysamDestinationResourcePath + "}";
+  // Direct File References
+  if (resource[0] === "File") {
+    shelbysamTemplate.Resources[args.dlid] =
+      "${file:" + shelbysamDestinationResourcePath + "}";
+    fs.cpSync(shelbysamSourceResourcePath, shelbysamDestinationResourcePath);
+  }
+  // File Object / Group References
+  else if (resource[0] === "FileObject") {
+    const sourceResources = await readYaml(shelbysamSourceResourcePath);
 
-  // write the resource file
-  fs.cpSync(shelbysamSourceResourcePath, shelbysamDestinationResourcePath);
+    // if group flag is set to true, re-create all resources in the file
+    if (args.group) {
+      const destResources = {};
+      for (const [k, v] of Object.entries(sourceResources)) {
+        shelbysamTemplate.Resources[args.dlid + k] =
+          "${file:" + shelbysamDestinationResourcePath + ":" + k + "}";
+        destResources[k] = v;
+      }
+      await writeYaml(shelbysamDestinationResourcePath, destResources);
+    }
+    // if group flag is set to false, re-create only the specified resource
+    else {
+      shelbysamTemplate.Resources[args.dlid] =
+        "${file:" + shelbysamDestinationResourcePath + "}";
+
+      console.log(sourceResources[resource[1][2]]);
+      await writeYaml(
+        shelbysamDestinationResourcePath,
+        sourceResources[resource[1][2]]
+      );
+    }
+  }
 
   // write the final template
-  fs.writeFileSync(
-    `${shelbysamConfig.shelbysam_template_file}`,
-    yaml.dump(shelbysamTemplate)
-  );
+  await writeYaml(shelbysamConfig.shelbysam_template_file, shelbysamTemplate);
 
-  return {};
+  return;
 };
 
 // add support for nested file objects

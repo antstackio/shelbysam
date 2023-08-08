@@ -10,43 +10,10 @@ import { add } from "./commands/add.mjs";
 import { config } from "./commands/config.mjs";
 import { remove } from "./commands/remove.mjs";
 import { clone } from "./commands/clone.mjs";
+import { awsRegions } from "./utils/constants.mjs";
 
 // Get the original command from process.argv
 const command = process.argv.slice(2).join(" ");
-const awsRegions = [
-  "us-east-1",
-  "us-east-2",
-  "us-west-1",
-  "us-west-2",
-  "ap-south-1",
-  "ap-south-2",
-  "af-south-1",
-  "ap-east-1",
-  "ap-northeast-1",
-  "ap-northeast-2",
-  "ap-northeast-3",
-  "ap-southeast-1",
-  "ap-southeast-2",
-  "ap-southeast-3",
-  "ap-southeast-4",
-  "ca-central-1",
-  "cn-north-1",
-  "cn-northwest-1",
-  "eu-central-1",
-  "eu-central-2",
-  "eu-north-1",
-  "eu-south-1",
-  "eu-south-2",
-  "eu-west-1",
-  "eu-west-1",
-  "eu-west-2",
-  "eu-west-3",
-  "me-central-1",
-  "me-south-1",
-  "sa-east-1",
-  "us-gov-east-1",
-  "us-gov-west-1",
-];
 
 inquirer.registerPrompt("autocomplete", autocompletePrompt);
 
@@ -58,10 +25,12 @@ yargs(hideBin(process.argv))
       yargs.option("itemplate", {
         description: "Name of the template file to be constructed",
         type: "string",
+        alias: "i",
       });
       yargs.option("otemplate", {
         description: "Name of the constructed template file",
         type: "string",
+        alias: "o",
       });
     },
     (argv) => {
@@ -75,10 +44,12 @@ yargs(hideBin(process.argv))
       yargs.option("template", {
         description: "Name of the template file to be deconstructed",
         type: "string",
+        alias: "t",
       });
       yargs.option("path", {
         description: "Path of destructured resources",
         type: "string",
+        alias: "p",
       });
     },
     (argv) => {
@@ -92,11 +63,13 @@ yargs(hideBin(process.argv))
       yargs.option("type", {
         description: "Cloudformation resource type",
         type: "string",
+        alias: "t",
         required: true,
       });
       yargs.option("lid", {
         description: "Cloudformation logical id",
         type: "string",
+        alias: "i",
         required: true,
       });
     },
@@ -111,6 +84,7 @@ yargs(hideBin(process.argv))
       yargs.option("lid", {
         description: "Cloudformation logical id",
         type: "string",
+        alias: "i",
         required: true,
       });
     },
@@ -124,13 +98,21 @@ yargs(hideBin(process.argv))
     (yargs) => {
       yargs.option("slid", {
         description: "Source Cloudformation logical id",
+        alias: "s",
         type: "string",
         required: true,
       });
       yargs.option("dlid", {
-        description: "Destination Cloudformation logical id",
+        description: "Destination Cloudformation Logical Id",
+        alias: "d",
         type: "string",
         required: true,
+      });
+      yargs.option("group", {
+        description: "Group Resource Option",
+        alias: "g",
+        type: "boolean",
+        default: false,
       });
     },
     (argv) => {
@@ -173,12 +155,6 @@ yargs(hideBin(process.argv))
       .then((answers) => {
         config(answers);
       });
-  })
-
-  .option("help", {
-    alias: "h",
-    type: "boolean",
-    description: "coming soon*",
   })
   .version("1.0.7")
   .parse();

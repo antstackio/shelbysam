@@ -47,7 +47,17 @@ Flags
 
 Both the flags are optional. If the flags are not specified ShelbySAM will pick up the information from the `shelbysam-config.toml`.
 
-## Clone
+## Add Resource using ShelbySAM
+
+The add command creates resource file with the respective template and adds it to the final template
+
+Flags
+
+--type : The cloudformation type. eg : `AWS::Lambda::Function"
+
+--lid : The logical id for the new resource
+
+## Clone Resource using ShelbySAM
 
 The clone command clones a resource in the existing template.
 
@@ -56,6 +66,16 @@ Flags
 --slid : The source logical id of the resource from `shelbysam_template_file`
 
 --dlid : The destination logical if of the resource to be created in `shelbysam_template_file`
+
+- Note : Available only for direct file references
+
+## Remove using ShelbySAM
+
+The remove command creates resource file with the respective template and also removes it to the final template
+
+Flags
+
+--lid : The logical id for the resource to be removed
 
 - Note : Available only for direct file references
 

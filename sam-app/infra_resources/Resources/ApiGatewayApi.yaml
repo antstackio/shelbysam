@@ -1,0 +1,7 @@
+Type: AWS::Serverless::Api
+Properties:
+  StageName: Prod
+  Cors:
+    AllowMethods: '''OPTIONS, POST, GET'''
+    AllowHeaders: '''Content-Type'''
+    AllowOrigin: '''*'''

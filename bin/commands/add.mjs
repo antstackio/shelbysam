@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readJson, readFileToJson, readConfig } from "../utils/helper.mjs";
+import { readJson, readYaml, readConfig } from "../utils/helper.mjs";
 import fs from "fs";
 import yaml from "js-yaml";
 let templateRegistry = {};
@@ -58,7 +58,7 @@ const add = async (args, command) => {
   );
 
   // read template file
-  const shelbysamTemplate = await readFileToJson(
+  const shelbysamTemplate = await readYaml(
     shelbysamConfig.shelbysam_template_file
   );
 
