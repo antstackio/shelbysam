@@ -1,10 +1,12 @@
 # ShelbySAM
 
-`Shelbysam` is a transformative npm package that streamlines SAM templates. Simplify your cloudformation journey with Shelbysam's intuitive "construction" and "deconstruction" features, making cloud management a breeze.It effortlessly splits a complex YAML file into individual resource-specific files, fostering easy maintenance and scalability.
+`ShelbySAM` is a transformative npm package that streamlines SAM templates. Simplify your cloudformation journey with ShelbySAM's intuitive "construction" and "deconstruction" features, making cloud management a breeze.It effortlessly splits a complex YAML file into individual resource-specific files, fostering easy maintenance and scalability.
 
 You can also seamlessly add new resources, Shelbysam dynamically fetches essential parameters from the CloudFormation registry. Plus you can clone or remove existing resources.
 
 ## Installation
+
+The NPM package is available [here](https://www.npmjs.com/package/@antstackio/shelbysam). Install the package globally using the following command.
 
 `npm install -g @antstackio/shelbysam`
 

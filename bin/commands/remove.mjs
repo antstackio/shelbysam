@@ -5,8 +5,6 @@ import {
   writeYaml,
   matchRegex,
 } from "../utils/helper.mjs";
-import { fileRegex, fileObjectRegex } from "../utils/constants.mjs";
-import yaml from "js-yaml";
 import fs from "fs";
 
 // Main Function

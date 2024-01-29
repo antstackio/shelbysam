@@ -1,6 +1,7 @@
 // Regex
 const fileRegex = /\$\{file:(.*?)\}/g; // direct file reference
 const fileObjectRegex = /\$\{file:([^:}]+):([^}]+)\}/g; // nested file reference
+const markdownSyntax = `/*****************************/\nShelbySAM - About the resource\n/*****************************/`
 
 // AWS Regions
 const awsRegions = [
@@ -105,4 +106,4 @@ const cfr = {
     "https://s3.us-gov-west-1.amazonaws.com/cfn-resource-specifications-us-gov-west-1-prod/latest/CloudFormationResourceSpecification.json",
 };
 
-export { fileRegex, fileObjectRegex, awsRegions, cfr };
+export { fileRegex, fileObjectRegex, awsRegions, cfr, markdownSyntax};

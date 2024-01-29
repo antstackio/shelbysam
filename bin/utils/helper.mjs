@@ -2,15 +2,26 @@ import { schema } from "yaml-cfn";
 import yaml from "js-yaml";
 import fs from "fs";
 import toml from "toml";
-import { fileObjectRegex, fileRegex } from "./constants.mjs";
+import { fileObjectRegex, fileRegex, markdownSyntax} from "./constants.mjs";
 
 const readFile = async (filename) => {
-  return fs.readFileSync(filename, "utf8");
+  const fileString = await fs.readFileSync(filename, "utf8")
+  const markdownCheck = fileString.split(markdownSyntax)
+  // TODO: Future implementations using markdown
+  // if (markdownCheck.length>1){
+  //   // markdown exists
+  // }
+  return markdownCheck[0]
 };
 
 // helper function to read yaml file and parse it as json
 const readYaml = async (filePath) => {
-  return yaml.load(await readFile(filePath), { schema: schema });
+  try {
+    return yaml.load(await readFile(filePath), { schema: schema });  
+  } catch (error) {
+    console.error("Unable to parse yaml, check syntax in ", filePath)
+  }
+  
 };
 
 // helper function to read json file and parse it as json
@@ -31,7 +42,7 @@ const matchRegex = (string) => {
     return ["FileObject", matchFileObjectRegex[0]];
   } else if (matchFileRegex !== null && matchFileRegex.length > 0) {
     return ["File", matchFileRegex[0]];
-  }
+  }else return ["String", string]
 };
 
 // helper function to write yaml to file

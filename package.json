@@ -1,7 +1,7 @@
 {
   "name": "@antstackio/shelbysam",
-  "version": "1.1.2",
-  "description": "shelbysam is a plugin for aws sam to provide additional functionalities",
+  "version": "1.1.5",
+  "description": "ShelbySAM is a plugin to ease cloudformation / sam development",
   "main": "./bin/cli.mjs",
   "bin": {
     "shelbysam": "./bin/cli.mjs"
@@ -11,7 +11,12 @@
     "url": "git+https://github.com/antstackio/shelby-sam.git"
   },
   "dependencies": {
+    "inquirer": "^9.2.8",
+    "inquirer-autocomplete-prompt": "^3.0.0",
     "js-yaml": "^4.1.0",
+    "json2toml": "^5.0.0",
+    "toml": "^3.0.0",
+    "yaml-cfn": "^0.3.2",
     "yargs": "^17.7.2"
   },
   "author": "Sandeep Kumar P <sands.kumar4u@gmail.com> (https://github.com/sandykumar93) ",
@@ -24,12 +29,5 @@
     "serverless",
     "sam-cli",
     "aws"
-  ],
-  "devDependencies": {
-    "inquirer": "^9.2.8",
-    "inquirer-autocomplete-prompt": "^3.0.0",
-    "json2toml": "^5.0.0",
-    "toml": "^3.0.0",
-    "yaml-cfn": "^0.3.2"
-  }
+  ]
 }

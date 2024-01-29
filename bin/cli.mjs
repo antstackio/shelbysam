@@ -20,7 +20,7 @@ inquirer.registerPrompt("autocomplete", autocompletePrompt);
 yargs(hideBin(process.argv))
   .command(
     "construct",
-    "Construct SAM Application's template.yaml",
+    "Construct SAM / Cloudformation template.yaml",
     (yargs) => {
       yargs.option("itemplate", {
         description: "Name of the template file to be constructed",
@@ -156,5 +156,7 @@ yargs(hideBin(process.argv))
         config(answers);
       });
   })
-  .version("1.0.7")
-  .parse();
+  .demandCommand(1, "", null)
+  .version("1.1.5")
+  .parse()
+  
